@@ -15,6 +15,8 @@ public class Match {
 	 
 	private String date;
 	
+	private String winner;
+	
 	private String rCarry;
 	private String rMid;
 	private String rOfflane;
@@ -84,6 +86,10 @@ public class Match {
 	public void setDate(String date) {
 		this.date = date;		
 	}
+	
+	public void setWinner(String winner) {
+		this.winner = winner;
+	}
 
 	@Override
 	public String toString() {
@@ -92,6 +98,7 @@ public class Match {
 		builder.append(matchId);
 		builder.append("\ndate: ");
 		builder.append(date + "\n");
+		builder.append(winner + " won\n");
 		builder.append("radiant side: \n");
 		builder.append(rCarry + "\n");
 		builder.append(rMid + "\n");

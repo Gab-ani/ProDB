@@ -66,6 +66,12 @@ public class StratzMatchSniffer implements MatchSniffer {
 			
 			result.setDate(jNode.get("statsDateTime").asText());
 			result.setID(jNode.get("id").asLong());
+			if(jNode.get("didRadiantWin").asBoolean()) {
+				result.setWinner("radiant");
+			} else {
+				result.setWinner("dire");
+			}
+				
 			
 		} catch (JsonProcessingException e1) {
 			e1.printStackTrace();
