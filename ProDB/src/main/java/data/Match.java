@@ -85,4 +85,26 @@ public class Match {
 		this.date = date;		
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("match id: ");
+		builder.append(matchId);
+		builder.append("\ndate: ");
+		builder.append(date + "\n");
+		builder.append("radiant side: \n");
+		builder.append(rCarry + "\n");
+		builder.append(rMid + "\n");
+		builder.append(rOfflane + "\n");
+		builder.append(rSoft + "\n");
+		builder.append(rHard + "\n");
+		builder.append("dire side: \n");
+		builder.append(dCarry + "\n");
+		builder.append(dMid + "\n");
+		builder.append(dOfflane + "\n");
+		builder.append(dSoft + "\n");
+		builder.append(dHard + "\n");
+		
+		return builder.toString();
+	}
 }
