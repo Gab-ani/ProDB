@@ -44,14 +44,24 @@ public class StratzMatchSniffer implements MatchSniffer {
 		
 		HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
 		
-		ResponseEntity<String> response = restTemplate.exchange(urlFromId(6712506154l), HttpMethod.GET, entity, String.class);
+		try {
+			ResponseEntity<String> response = restTemplate.exchange(urlFromId(matchId), HttpMethod.GET, entity, String.class);
+			String json = response.getBody();
+			
+			return json;
+		} catch (Exception e) {
+			System.out.println("can't fetch " + matchId);
+			return "";
+		}
 		
-		String json = response.getBody();
-		
-		return json;
 	}
 	
 	private Match jsonToMatch(String json) {
+		
+		if(json.equals("")) {
+			System.out.println("empty json");
+			return null;
+		}
 		
 		Match result = new Match();
 		ObjectMapper mapper = new ObjectMapper();
@@ -60,6 +70,7 @@ public class StratzMatchSniffer implements MatchSniffer {
 		try {
 			
 			jNode = mapper.readTree(json);
+
 			for(int i = 0; i < 10; i++) {
 				parsePlayer(result, jNode.get("players").get(i));
 			}
@@ -82,45 +93,48 @@ public class StratzMatchSniffer implements MatchSniffer {
 	
 	private void parsePlayer(Match match, JsonNode player) {
 		
+		String hero = player.get("heroId").asText();
+//		System.out.println(hero);
+		
 		if(player.get("isRadiant").asBoolean()) {						
 			
 			if(player.get("role").asInt() == 2) {
-				match.radiantHard(player.get("heroId").asText());
+				match.radiantHard(hero);
 				return;
 			}
 			if(player.get("role").asInt() == 1) {
-				match.radiantSoft(player.get("heroId").asText());
+				match.radiantSoft(hero);
 				return;
 			}
 			if(player.get("lane").asInt() == 1) {
-				match.radiantCarry(player.get("heroId").asText());
+				match.radiantCarry(hero);
 				return;
 			} else if(player.get("lane").asInt() == 2) {
-				match.radiantMid(player.get("heroId").asText());
+				match.radiantMid(hero);
 				return;
 			} else {
-				match.radiantOfflane(player.get("heroId").asText());
+				match.radiantOfflane(hero);
 				return;
 			}
 			
 		} else {														
 			
 			if(player.get("role").asInt() == 2) {
-				match.direHard(player.get("heroId").asText());
+				match.direHard(hero);
 				return;
 			}
 			if(player.get("role").asInt() == 1) {
-				match.direSoft(player.get("heroId").asText());
+				match.direSoft(hero);
 				return;
 			}
 			if(player.get("lane").asInt() == 1) {
-				match.direCarry(player.get("heroId").asText());
+				match.direCarry(hero);
 				return;
 			} else if(player.get("lane").asInt() == 2) {
-				match.direMid(player.get("heroId").asText());
+				match.direMid(hero);
 				return;
 			} else {
-				match.direOfflane(player.get("heroId").asText());
+				match.direOfflane(hero);
 				return;
 			}
 			
@@ -140,6 +154,7 @@ public class StratzMatchSniffer implements MatchSniffer {
 	}
 
 	private String urlFromId(long id) {
+		System.out.println("https://api.stratz.com/api/v1/match/" + id + "/breakdown");
 		return "https://api.stratz.com/api/v1/match/" + id + "/breakdown";
 	}
 	

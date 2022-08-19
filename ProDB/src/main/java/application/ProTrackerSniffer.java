@@ -10,7 +10,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
+import data.MatchHistory;
+import parcing.ParsingService;
 import parcing.ProTrackerMatchSelector;
 import parcing.StratzMatchSniffer;
 
@@ -19,19 +24,26 @@ import parcing.StratzMatchSniffer;
 @EntityScan({"data"})
 @SpringBootApplication
 @Configuration
-@Import({ProTrackerMatchSelector.class, StratzMatchSniffer.class})
+@EnableScheduling
+@Import({ProTrackerMatchSelector.class, StratzMatchSniffer.class, ProMatchesFlowSaver.class, ParsingService.class})
 public class ProTrackerSniffer {
 
 	@Autowired
-	ProTrackerMatchSelector selector;
-	@Autowired
-	StratzMatchSniffer stratzSniffer;
+	ProMatchesFlowSaver matchWatcher;
 	
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
-			System.out.println(stratzSniffer.formById(6712506154l));
+//			matchWatcher.savePortion();  <--- sheduled
 		};
+	}
+	
+	@Bean
+	public TaskScheduler  taskScheduler() {
+	    ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
+	    threadPoolTaskScheduler.setPoolSize(5);
+	    threadPoolTaskScheduler.setThreadNamePrefix("ThreadPoolTaskScheduler");
+	    return threadPoolTaskScheduler;
 	}
 	
 	public static void main(String[] args) {
@@ -39,4 +51,3 @@ public class ProTrackerSniffer {
 	}
 
 }
-//952

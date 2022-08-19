@@ -19,7 +19,10 @@ public class ParsingService {
 		
 		var	output = new ArrayList<Match>();
 		for (Long matchId : idProvider.suggestIds()) {
-			output.add(matchDataFetcher.formById(matchId));
+			Match match = matchDataFetcher.formById(matchId);
+			if(match != null) {
+				output.add(match);
+			}
 		}
 		return output;
 		

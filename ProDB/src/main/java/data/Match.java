@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
 @Entity
+@Table(name="history")
 public class Match {
 
 	@Id
@@ -47,35 +49,75 @@ public class Match {
 		return pick;
 	}
 	
-	public void radiantCarry(String hero) {
+	public void radiantCarry(String hero) {		// these setters cycle because stratz API doubledipping roles sometimes
+		if(this.rCarry != null) {							
+			radiantMid(hero);
+			return;
+		}
 		this.rCarry = hero;
 	}
 	public void radiantMid(String hero) {
+		if(this.rMid != null) {							
+			radiantOfflane(hero);
+			return;
+		}
 		this.rMid = hero;
 	}
 	public void radiantOfflane(String hero) {
+		if(this.rOfflane != null) {							
+			radiantSoft(hero);
+			return;
+		}
 		this.rOfflane = hero;
 	}
-	public void radiantSoft(String hero) {
+	public void radiantSoft(String hero) {					
+		if(this.rSoft != null) {							
+			radiantHard(hero);
+			return;
+		}
 		this.rSoft = hero;
 	}
 	public void radiantHard(String hero) {
+		if(this.rHard != null) {
+			radiantCarry(hero);
+			return;
+		}
 		this.rHard = hero;
 	}
 	
 	public void direCarry(String hero) {
+		if(this.dCarry != null) {							
+			direMid(hero);
+			return;
+		}
 		this.dCarry = hero;
 	}
 	public void direMid(String hero) {
+		if(this.dMid != null) {							
+			direOfflane(hero);
+			return;
+		}
 		this.dMid = hero;
 	}
 	public void direOfflane(String hero) {
+		if(this.dOfflane != null) {							
+			direSoft(hero);
+			return;
+		}
 		this.dOfflane = hero;
 	}
 	public void direSoft(String hero) {
+		if(this.dSoft != null) {
+			direHard(hero);
+			return;
+		}
 		this.dSoft = hero;
 	}
 	public void direHard(String hero) {
+		if(this.dHard != null) {
+			direCarry(hero);
+			return;
+		}
 		this.dHard = hero;
 	}
 
