@@ -12,22 +12,25 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import parcing.ProTrackerMatchSelector;
+import parcing.StratzMatchSniffer;
 
 @EnableJpaRepositories({"data"})
 @ComponentScan({"data", "parsing"})
 @EntityScan({"data"})
 @SpringBootApplication
 @Configuration
-@Import({ProTrackerMatchSelector.class, })
+@Import({ProTrackerMatchSelector.class, StratzMatchSniffer.class})
 public class ProTrackerSniffer {
 
 	@Autowired
 	ProTrackerMatchSelector selector;
+	@Autowired
+	StratzMatchSniffer stratzSniffer;
 	
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
-			selector.suggestIds();
+			stratzSniffer.formById(6712506154l);
 		};
 	}
 	
@@ -36,3 +39,4 @@ public class ProTrackerSniffer {
 	}
 
 }
+//952

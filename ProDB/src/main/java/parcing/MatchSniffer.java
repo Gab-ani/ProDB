@@ -4,6 +4,6 @@ import data.Match;
 
 public interface MatchSniffer {
 
-	public Match formById(int matchId);
+	public Match formById(Long matchId);
 	
 }
