@@ -71,7 +71,7 @@ public class StratzMatchSniffer implements MatchSniffer {
 			e1.printStackTrace();
 		}
 		
-		return null;
+		return result;
 	}
 	
 	private void parsePlayer(Match match, JsonNode player) {
@@ -86,12 +86,15 @@ public class StratzMatchSniffer implements MatchSniffer {
 				match.radiantSoft(player.get("heroId").asText());
 				return;
 			}
-			if(player.get("lane").asInt() == 1) {						
+			if(player.get("lane").asInt() == 1) {
 				match.radiantCarry(player.get("heroId").asText());
-			} else if(player.get("lane").asInt() == 2) {				
+				return;
+			} else if(player.get("lane").asInt() == 2) {
 				match.radiantMid(player.get("heroId").asText());
-			} else {													
+				return;
+			} else {
 				match.radiantOfflane(player.get("heroId").asText());
+				return;
 			}
 			
 		} else {														
@@ -104,12 +107,15 @@ public class StratzMatchSniffer implements MatchSniffer {
 				match.direSoft(player.get("heroId").asText());
 				return;
 			}
-			if(player.get("lane").asInt() == 1) {						
+			if(player.get("lane").asInt() == 1) {
 				match.direCarry(player.get("heroId").asText());
-			} else if(player.get("lane").asInt() == 2) {				
+				return;
+			} else if(player.get("lane").asInt() == 2) {
 				match.direMid(player.get("heroId").asText());
-			} else {													
+				return;
+			} else {
 				match.direOfflane(player.get("heroId").asText());
+				return;
 			}
 			
 		}
@@ -119,9 +125,9 @@ public class StratzMatchSniffer implements MatchSniffer {
 		// 1 = soft
 		// 0 = core
 		// player.lane coded as:
-		// 1 = bot
-		// 2 = mid
-		// 3 = top
+		// 1 = easylane
+		// 2 = midlane
+		// 3 = hardlane
 		// player.side is coded as "isRadiant" boolean
 		// so  radiant carry will be (isRadiant == true, lane = 1, role = 0) etc.
 		//*****************************************************************************************

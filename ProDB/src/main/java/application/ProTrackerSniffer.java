@@ -30,7 +30,7 @@ public class ProTrackerSniffer {
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
-			stratzSniffer.formById(6712506154l);
+			System.out.println(stratzSniffer.formById(6712506154l));
 		};
 	}
 	
