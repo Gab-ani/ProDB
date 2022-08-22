@@ -14,27 +14,29 @@ import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
-import data.MatchHistory;
-import parcing.ParsingService;
-import parcing.ProTrackerMatchSelector;
-import parcing.StratzMatchSniffer;
+import application.parsing.*;
+import application.data_processing.*;
+import application.data.*;
 
-@EnableJpaRepositories({"data"})
-@ComponentScan({"data", "parsing"})
-@EntityScan({"data"})
+@EnableJpaRepositories({"data", "data_processing"})
+@ComponentScan({"data", "parsing", "data_processing", "application"})
+@EntityScan({"data", "data_processing"})
 @SpringBootApplication
 @Configuration
 @EnableScheduling
-@Import({ProTrackerMatchSelector.class, StratzMatchSniffer.class, ProMatchesFlowSaver.class, ParsingService.class})
+//@Import({ProTrackerMatchSelector.class, StratzMatchSniffer.class, ProMatchesFlowSaver.class, ParsingService.class})
 public class ProTrackerSniffer {
 
 	@Autowired
 	ProMatchesFlowSaver matchWatcher;
+	@Autowired
+	MatchupService matchupService;
 	
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
-//			matchWatcher.savePortion();  <--- sheduled
+			matchupService.updateAll();
+			//matchWatcher.savePortion();  //<--- on the launch then sheduled for 0 minute hourly
 		};
 	}
 	

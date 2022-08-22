@@ -1,6 +1,6 @@
-package data;
+package application.data;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,4 +19,7 @@ public class MatchHistory {
 		matchesDB.saveAll(collection);
 	}
 	
+	public List<Match> findAll() {
+		return matchesDB.findAll();
+	}
 }

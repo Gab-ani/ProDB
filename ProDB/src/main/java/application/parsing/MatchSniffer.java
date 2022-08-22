@@ -1,6 +1,6 @@
-package parcing;
+package application.parsing;
 
-import data.Match;
+import application.data.Match;
 
 public interface MatchSniffer {
 

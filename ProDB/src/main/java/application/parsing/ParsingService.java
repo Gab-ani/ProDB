@@ -1,11 +1,11 @@
-package parcing;
+package application.parsing;
 
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import data.Match;
+import application.data.Match;
 
 @Service
 public class ParsingService {

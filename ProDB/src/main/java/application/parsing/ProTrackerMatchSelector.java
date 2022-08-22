@@ -1,7 +1,6 @@
-package parcing;
+package application.parsing;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 import org.jsoup.Jsoup;

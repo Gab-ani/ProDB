@@ -1,4 +1,4 @@
-package parcing;
+package application.parsing;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -16,14 +16,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import data.Match;
+import application.data.Match;
 
 // The class dedicated to parse match data from https://stratz.com and pack into data objects
 
 @Service
 public class StratzMatchSniffer implements MatchSniffer {
 
+	// will trigger GitGuardian but idgaf, they are free, only used for identification
+	// TODO probably rewrite as some file config thing with gitignore or hide into database
 	private static final String API_TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJodHRwczovL3N0ZWFtY29tbXVuaXR5LmNvbS9vcGVuaWQvaWQvNzY1NjExOTgyODk3OTU3ODgiLCJ1bmlxdWVfbmFtZSI6IkRhcmsgb2YgQ2hhcmdlbmVzcyIsIlN1YmplY3QiOiIwNTZkZDI3Yi03MTAzLTRlMzctYTc0OC1jZmZjMjgwYjViZTgiLCJTdGVhbUlkIjoiMzI5NTMwMDYwIiwibmJmIjoxNjYwMzM3NTI2LCJleHAiOjE2OTE4NzM1MjYsImlhdCI6MTY2MDMzNzUyNiwiaXNzIjoiaHR0cHM6Ly9hcGkuc3RyYXR6LmNvbSJ9.m_s22LBhQgb863YOUDy0zze5k2I0dXgvw9kOGqbQXT0";
+	
 	private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0";
 	
 	public Match formById(Long matchId) {
@@ -58,7 +61,7 @@ public class StratzMatchSniffer implements MatchSniffer {
 	
 	private Match jsonToMatch(String json) {
 		
-		if(json.equals("")) {
+		if(json == null || json.equals("")) {
 			System.out.println("empty json");
 			return null;
 		}

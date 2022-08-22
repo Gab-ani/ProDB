@@ -1,12 +1,11 @@
-package data;
+package application.data;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.databind.JsonNode;
 
 @Entity
 @Table(name="history")
@@ -34,7 +33,7 @@ public class Match {
 		
 	}
 	
-	public ArrayList<String> getPick() {
+	public List<String> getPick() {
 		var pick = new ArrayList<String>();
 		pick.add(rCarry);
 		pick.add(rMid);
@@ -156,4 +155,52 @@ public class Match {
 		
 		return builder.toString();
 	}
+
+	public boolean played(int heroId) {
+		for(String hero : getPick()) {
+			if(Integer.parseInt(hero) == heroId) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean heroWon(int heroId) {
+		if( ( forDirePlayed(heroId) && winner.equals("dire") ) || ( forRadiantPlayed(heroId) && winner.equals("radiant") ) )
+			return true;
+		return false;
+	}
+
+	public boolean wereOpposed(int heroId, int enemyId) {
+		if( (forRadiantPlayed(heroId) && forDirePlayed(enemyId) ) || (forRadiantPlayed(enemyId) && forDirePlayed(heroId) ))
+			return true;
+		return false;
+	}
+	
+	public boolean teamedUp(int heroId, int allyId) {
+		if( (forRadiantPlayed(heroId) && forRadiantPlayed(allyId) ) || (forDirePlayed(allyId) && forDirePlayed(heroId) ))
+			return true;
+		return false;
+	}
+
+	private boolean forDirePlayed(int heroId) {
+		var pick = getPick();
+		for(int i = 5; i < 10; i++) {
+			if(pick.get(i).equals(heroId + "")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean forRadiantPlayed(int heroId) {
+		var pick = getPick();
+		for(int i = 0; i < 5; i++) {
+			if(pick.get(i).equals(heroId + "")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }
