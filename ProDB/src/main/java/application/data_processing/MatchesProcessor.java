@@ -1,10 +1,13 @@
 package application.data_processing;
 
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import application.data.Match;
 
+@Service
 public class MatchesProcessor {
 
 	private List<Match> history;

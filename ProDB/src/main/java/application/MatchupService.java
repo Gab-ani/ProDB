@@ -3,6 +3,7 @@ package application;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import application.data.HeroesService;
 import application.data.MatchHistory;
@@ -10,6 +11,7 @@ import application.data_processing.HeroMatchup;
 import application.data_processing.MatchesProcessor;
 import application.data_processing.MatchupRepository;
 
+@Service
 public class MatchupService {
 
 	@Autowired

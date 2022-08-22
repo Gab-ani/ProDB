@@ -18,13 +18,12 @@ import application.parsing.*;
 import application.data_processing.*;
 import application.data.*;
 
-@EnableJpaRepositories({"data", "data_processing"})
-@ComponentScan({"data", "parsing", "data_processing", "application"})
-@EntityScan({"data", "data_processing"})
+@EnableJpaRepositories
+@ComponentScan
+@EntityScan
 @SpringBootApplication
 @Configuration
 @EnableScheduling
-//@Import({ProTrackerMatchSelector.class, StratzMatchSniffer.class, ProMatchesFlowSaver.class, ParsingService.class})
 public class ProTrackerSniffer {
 
 	@Autowired
@@ -36,7 +35,7 @@ public class ProTrackerSniffer {
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
 			matchupService.updateAll();
-			//matchWatcher.savePortion();  //<--- on the launch then sheduled for 0 minute hourly
+			matchWatcher.savePortion();  //<--- on the launch then sheduled for 0 minute hourly
 		};
 	}
 	

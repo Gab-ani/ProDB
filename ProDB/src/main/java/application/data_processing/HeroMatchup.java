@@ -17,7 +17,7 @@ public class HeroMatchup {
 	@Column(name = "secondary")
 	private int withHero;
 	
-	@Column(name = "with")
+	@Column(name = "together")
 	private double withWR;
 	@Column(name = "against")
 	private double againstWR;
