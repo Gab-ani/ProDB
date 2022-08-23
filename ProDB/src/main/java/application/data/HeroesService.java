@@ -2,6 +2,7 @@ package application.data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,11 @@ public class HeroesService {
 			ids.add(hero.getId());
 		}
 		return ids;
+	}
+
+	public Optional<Hero> getById(int heroId) {
+		Optional<Hero> hero = heroesDB.findById(heroId);
+		return hero;
 	}
 	
 }

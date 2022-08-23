@@ -35,7 +35,7 @@ public class ProTrackerSniffer {
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
 			matchupService.updateAll();
-			matchWatcher.savePortion();  //<--- on the launch then sheduled for 0 minute hourly
+//			matchWatcher.savePortion();  //<--- on the launch then sheduled for 0 minute hourly
 		};
 	}
 	

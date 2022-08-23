@@ -26,6 +26,7 @@ public class MatchupService {
 	public void updateAll() {
 		actualiseHistory();
 		for(int heroId : heroes.getAllIds()) {
+			System.out.println("обновляю " + heroId);
 			updateHeroMatchups(heroId);
 		}
 	}
@@ -36,6 +37,7 @@ public class MatchupService {
 		for(int withHero : allHeroes) {
 			if(withHero == forHero)
 				continue;
+			
 			HeroMatchup matchup = new HeroMatchup(forHero, withHero, processor.calculateWith(forHero, withHero), processor.calculateAgainst(forHero, withHero));
 			matchups.save(matchup);
 		}

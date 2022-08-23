@@ -43,22 +43,26 @@ public class MatchesProcessor {
 	}
 	
 	public double winrate(List<Match> subHistory, int heroId) {
-		int wins = 0;
-		int games = 0;
+		double wins = 0;
+		double games = 0;
 		for(Match match : subHistory) {
 			games += 1;
 			if(match.heroWon(heroId))
 				wins += 1;
 		}
+		if(games == 0)
+			return -1;
 		return wins / games;
 	}
 	
 	public double calculateAgainst(int forHero, int againstHero) {
+		System.out.println(selectByEnemy(forHero, againstHero).size() + " матчей " + forHero + " " + againstHero);
 		return winrate( selectByEnemy(forHero, againstHero) , forHero ) - baseWinrate(forHero);
 	}
 	
-	public double calculateWith(int forHero, int againstHero) {
-		return winrate( selectByAlly(forHero, againstHero) , forHero ) - baseWinrate(forHero);
+	public double calculateWith(int forHero, int withHero) {
+		System.out.println(selectByAlly(forHero, withHero).size() + " матчей " + forHero + " " + withHero);
+		return winrate( selectByAlly(forHero, withHero) , forHero ) - baseWinrate(forHero);
 	}
 	
 	public void setData(List<Match> history) {
