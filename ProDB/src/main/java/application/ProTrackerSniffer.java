@@ -27,15 +27,24 @@ import application.data.*;
 public class ProTrackerSniffer {
 
 	@Autowired
-	ProMatchesFlowSaver matchWatcher;
+	private ProMatchesFlowSaver matchWatcher;
 	@Autowired
-	MatchupService matchupService;
+	private MatchupService matchupService;
+	@Autowired
+	private MatchAnalyser predictor;
+	
 	
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
-			matchupService.updateAll();
-//			matchWatcher.savePortion();  //<--- on the launch then sheduled for 0 minute hourly
+//			matchupService.updateAll();
+			matchWatcher.savePortion();  //<--- on the launch then sheduled for 0 minute hourly
+			
+			
+//			Hero[] dire = predictor.createTeam("вивер", "дизраптор", "тайд", "петух", "шторм");
+//			Hero[] radiant = predictor.createTeam("ТА", "тини", "марси", "мышь", "клок");
+//			
+//			predictor.predict(dire, radiant);
 		};
 	}
 	

@@ -15,13 +15,13 @@ import application.data_processing.MatchupRepository;
 public class MatchupService {
 
 	@Autowired
-	MatchupRepository matchups;
+	private MatchupRepository matchups;
 	@Autowired
-	MatchesProcessor processor;
+	private MatchesProcessor processor;
 	@Autowired
-	MatchHistory history;
+	private MatchHistory history;
 	@Autowired
-	HeroesService heroes;
+	private HeroesService heroes;
 	
 	public void updateAll() {
 		actualiseHistory();
@@ -41,6 +41,14 @@ public class MatchupService {
 			HeroMatchup matchup = new HeroMatchup(forHero, withHero, processor.calculateWith(forHero, withHero), processor.calculateAgainst(forHero, withHero));
 			matchups.save(matchup);
 		}
+	}
+	
+	public double withAlly(int target, int ally) {
+		return matchups.getById(target + "-" + ally).getWith();
+	}
+	
+	public double againstEnemy(int target, int enemy) {
+		return matchups.getById(target + "-" + enemy).getAgainst();
 	}
 	
 	public void save(HeroMatchup matchup) {

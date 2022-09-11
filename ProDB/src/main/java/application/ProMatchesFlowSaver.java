@@ -11,9 +11,9 @@ import application.parsing.ParsingService;
 public class ProMatchesFlowSaver {
 
 	@Autowired
-	ParsingService parser;
+	private ParsingService parser;
 	@Autowired
-	MatchHistory history;
+	private MatchHistory history;
 
 	@Scheduled(cron = "0 0 * * * *")
 	public void savePortion() {

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class MatchHistory {
 
 	@Autowired
-	MatchRepository matchesDB;
+	private MatchRepository matchesDB;
 	
 	public void add(Match match) {
 		matchesDB.save(match);
