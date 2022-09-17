@@ -10,7 +10,11 @@ public class HeroNicknamesDictionary {
 	private HeroNicknamesRepository nicknamesData;
 	
 	public int heroByNickname(String nickname) {
-		return nicknamesData.getByNickname(nickname).getHeroId();
+		HeroNickname nick = nicknamesData.getByNickname(nickname);
+		if(nick == null)
+			System.out.println(nickname);
+		int id = nick.getHeroId();
+		return id;
 	}
 	
 }
