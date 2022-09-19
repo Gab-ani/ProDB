@@ -34,6 +34,14 @@ public class HeroMatchup {
 		this.id = forHero + "-" + withHero;
 	}
 	
+	public double getWith() {
+		return withWR;
+	}
+	
+	public double getAgainst() {
+		return againstWR;
+	}
+	
 	//*****************************************************************************
 	// winrate with actually represents not winrate with certain hero in the team, 
 	// but the difference between that winrate and base winrate of the hero and can be negative.

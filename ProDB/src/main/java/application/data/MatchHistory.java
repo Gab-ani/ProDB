@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class MatchHistory {
 
 	@Autowired
-	MatchRepository matchesDB;
+	private MatchRepository matchesDB;
 	
 	public void add(Match match) {
 		matchesDB.save(match);
@@ -21,5 +21,9 @@ public class MatchHistory {
 	
 	public List<Match> findAll() {
 		return matchesDB.findAll();
+	}
+
+	public List<Match> getUnparsed() {
+		return matchesDB.findByParsed(false);
 	}
 }

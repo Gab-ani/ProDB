@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 public class HeroesService {
 
 	@Autowired
-	HeroRepository heroesDB;
+	private HeroRepository heroesDB;
+	@Autowired
+	private HeroNicknamesDictionary dictionary;
 	
 	public List<Integer> getAllIds() {
 		List<Integer> ids = new ArrayList<>();
@@ -20,10 +22,20 @@ public class HeroesService {
 		}
 		return ids;
 	}
+	
+	public Hero getByNickname(String nickname) {
+		Optional<Hero> hero = heroesDB.findById(dictionary.heroByNickname(nickname));
+		return hero.get();
+	}
 
-	public Optional<Hero> getById(int heroId) {
+	public Hero getById(int heroId) {
 		Optional<Hero> hero = heroesDB.findById(heroId);
-		return hero;
+		return hero.get();
+	}
+	
+	public Hero getByName(int heroId) {
+		Optional<Hero> hero = heroesDB.findById(heroId);
+		return hero.get();
 	}
 	
 }

@@ -1,6 +1,9 @@
 package application.parsing;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,18 +14,41 @@ import application.data.Match;
 public class ParsingService {
 
 	@Autowired
-	MatchSniffer matchDataFetcher;			// takes match id, returns Match object
+	private MatchSniffer matchDataFetcher;			// takes match id, returns Match object
 	@Autowired
-	MatchSelector idProvider;				// provides a list of numbers that definitely are ids of recent played matches
+	private MatchSelector idProvider;				// provides a list of numbers that definitely are ids of recent played matches
 	
-	public ArrayList<Match> fetchData() {
+	private ArrayList<Long> omitted;				// contains match ids that hadn't been fetched on previous cycles for some reason (connection wise)
+	
+	@PostConstruct
+	public void init() {
+		omitted = new ArrayList<>();
+	}
+	
+	public ArrayList<Match> updateUnparsed(List<Match> blankMatches) {
+		System.out.println("в базе " + blankMatches.size() + " пустых матчей");
 		
 		var	output = new ArrayList<Match>();
-		for (Long matchId : idProvider.suggestIds()) {
-			Match match = matchDataFetcher.formById(matchId);
+		
+		for (Match blankMatch : blankMatches) {
+			Match match = matchDataFetcher.formById(blankMatch.getId());
 			if(match != null) {
 				output.add(match);
 			}
+		}
+		
+		System.out.println("удалось обновить " + output.size() + " матчей");
+		return output;
+		
+	}
+
+	public ArrayList<Match> createNewBlankMatches() {
+		System.out.println("запрашиваю болванки матчей");
+		var idsToFetch =  idProvider.suggestIds();
+		var	output = new ArrayList<Match>();
+		for (Long matchId : idsToFetch) {
+			Match match = Match.createEmpty(matchId);
+			output.add(match);
 		}
 		return output;
 		

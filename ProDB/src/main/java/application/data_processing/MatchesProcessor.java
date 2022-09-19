@@ -56,12 +56,12 @@ public class MatchesProcessor {
 	}
 	
 	public double calculateAgainst(int forHero, int againstHero) {
-		System.out.println(selectByEnemy(forHero, againstHero).size() + " матчей " + forHero + " " + againstHero);
+//		System.out.println(selectByEnemy(forHero, againstHero).size() + " матчей " + forHero + " " + againstHero);
 		return winrate( selectByEnemy(forHero, againstHero) , forHero ) - baseWinrate(forHero);
 	}
 	
 	public double calculateWith(int forHero, int withHero) {
-		System.out.println(selectByAlly(forHero, withHero).size() + " матчей " + forHero + " " + withHero);
+//		System.out.println(selectByAlly(forHero, withHero).size() + " матчей " + forHero + " " + withHero);
 		return winrate( selectByAlly(forHero, withHero) , forHero ) - baseWinrate(forHero);
 	}
 	

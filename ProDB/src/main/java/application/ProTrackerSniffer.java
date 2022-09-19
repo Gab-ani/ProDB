@@ -4,7 +4,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -27,15 +29,27 @@ import application.data.*;
 public class ProTrackerSniffer {
 
 	@Autowired
-	ProMatchesFlowSaver matchWatcher;
+	private ProMatchesFlowSaver matchWatcher;
 	@Autowired
-	MatchupService matchupService;
+	private MatchupService matchupService;
+	@Autowired
+	private MatchAnalyser predictor;
+	
 	
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
-			matchupService.updateAll();
-//			matchWatcher.savePortion();  //<--- on the launch then sheduled for 0 minute hourly
+//			matchupService.updateAll();
+			matchWatcher.savePortion();  //<--- on the launch then sheduled for 0 minute hourly
+
+			Hero[] radiant = predictor.createTeam("чен", "кунка", "макака", "мирана", "ДК");
+			Hero[] dire = predictor.createTeam("блад", "феникс", "лешрак", "ящер", "ио");
+			
+			System.out.println(predictor.predict(radiant, dire));
+
+//			System.setProperty("java.awt.headless", "true");
+			
+//			predictor.cyclePredictions();
 		};
 	}
 	
@@ -48,7 +62,12 @@ public class ProTrackerSniffer {
 	}
 	
 	public static void main(String[] args) {
-		SpringApplication.run(ProTrackerSniffer.class, args);
+//		SpringApplication.run(ProTrackerSniffer.class, args);
+		SpringApplicationBuilder builder = new SpringApplicationBuilder(ProTrackerSniffer.class);
+
+		builder.headless(false);
+
+		ConfigurableApplicationContext context = builder.run(args);
 	}
 
 }

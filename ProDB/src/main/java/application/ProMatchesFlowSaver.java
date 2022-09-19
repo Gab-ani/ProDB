@@ -11,13 +11,14 @@ import application.parsing.ParsingService;
 public class ProMatchesFlowSaver {
 
 	@Autowired
-	ParsingService parser;
+	private ParsingService parser;
 	@Autowired
-	MatchHistory history;
+	private MatchHistory history;
 
-	@Scheduled(cron = "0 0 * * * *")
+	@Scheduled(cron = "* 0/30 * * * *")
 	public void savePortion() {
-		history.addAll(parser.fetchData());
+		history.addAll(parser.createNewBlankMatches());		// reads proTracker and create a bunch of unparsed matches in history
+		history.addAll(parser.updateUnparsed(history.getUnparsed()));
 	}
 	
 }
