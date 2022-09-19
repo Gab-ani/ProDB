@@ -22,15 +22,36 @@ public class Match {
 	private String rMid;
 	private String rOfflane;
 	private String rSoft;
-	private String rHard;				// indexes are farm priority sensetive eg 1 = safe, 2 = mid...
+	private String rHard;				
 	private String dCarry;
 	private String dMid;
 	private String dOfflane;
 	private String dSoft;
 	private String dHard;
 	
+	private boolean parsed;
+	
 	public Match() {
 		
+	}
+	
+	public static Match createEmpty(long matchId) {
+		Match emptyMatch = new Match();
+		emptyMatch.matchId = matchId;
+		emptyMatch.parsed = false;
+		emptyMatch.rCarry = -1 + "";
+		emptyMatch.rMid = -1 + "";
+		emptyMatch.rOfflane = -1 + "";
+		emptyMatch.rSoft = -1 + "";
+		emptyMatch.rHard = -1 + "";
+		emptyMatch.dCarry = -1 + "";
+		emptyMatch.dMid = -1 + "";
+		emptyMatch.dOfflane = -1 + "";
+		emptyMatch.dSoft = -1 + "";
+		emptyMatch.dHard = -1 + "";
+		emptyMatch.winner = "tbd";
+		emptyMatch.date = "-1";
+		return emptyMatch;
 	}
 	
 	public List<String> getPick() {
@@ -203,4 +224,11 @@ public class Match {
 		return false;
 	}
 
+	public long getId() {
+		return matchId;
+	}
+
+	public void setParsed(boolean parsed) {
+		this.parsed = parsed;
+	}
 }

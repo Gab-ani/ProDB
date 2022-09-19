@@ -53,7 +53,7 @@ public class StratzMatchSniffer implements MatchSniffer {
 			
 			return json;
 		} catch (Exception e) {
-			System.out.println("can't fetch " + matchId);
+	//		System.out.println("can't fetch " + matchId);
 			return "";
 		}
 		
@@ -62,7 +62,7 @@ public class StratzMatchSniffer implements MatchSniffer {
 	private Match jsonToMatch(String json) {
 		
 		if(json == null || json.equals("")) {
-			System.out.println("empty json");
+	//		System.out.println("empty json");			TODO create an exception
 			return null;
 		}
 		
@@ -90,6 +90,7 @@ public class StratzMatchSniffer implements MatchSniffer {
 		} catch (JsonProcessingException e1) {
 			e1.printStackTrace();
 		}
+		result.setParsed(true);
 		
 		return result;
 	}
@@ -157,7 +158,7 @@ public class StratzMatchSniffer implements MatchSniffer {
 	}
 
 	private String urlFromId(long id) {
-		System.out.println("https://api.stratz.com/api/v1/match/" + id + "/breakdown");
+	//	System.out.println("https://api.stratz.com/api/v1/match/" + id + "/breakdown");
 		return "https://api.stratz.com/api/v1/match/" + id + "/breakdown";
 	}
 	

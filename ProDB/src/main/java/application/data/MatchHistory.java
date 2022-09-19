@@ -22,4 +22,8 @@ public class MatchHistory {
 	public List<Match> findAll() {
 		return matchesDB.findAll();
 	}
+
+	public List<Match> getUnparsed() {
+		return matchesDB.findByParsed(false);
+	}
 }

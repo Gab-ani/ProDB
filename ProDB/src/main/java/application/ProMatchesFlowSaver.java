@@ -15,9 +15,10 @@ public class ProMatchesFlowSaver {
 	@Autowired
 	private MatchHistory history;
 
-	@Scheduled(cron = "0 0 * * * *")
+	@Scheduled(cron = "* 0/30 * * * *")
 	public void savePortion() {
-		history.addAll(parser.fetchData());
+		history.addAll(parser.createNewBlankMatches());		// reads proTracker and create a bunch of unparsed matches in history
+		history.addAll(parser.updateUnparsed(history.getUnparsed()));
 	}
 	
 }

@@ -1,6 +1,7 @@
 package application.parsing;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -24,22 +25,30 @@ public class ParsingService {
 		omitted = new ArrayList<>();
 	}
 	
-	public ArrayList<Match> fetchData() {
-		System.out.println("размер остатков: " + omitted.size());
-		var idsToFetch =  idProvider.suggestIds();
-		if(!omitted.isEmpty())
-			idsToFetch.addAll(omitted);					// add previous ids then clear omitted to contain this cycle leftover
-		omitted.clear();
+	public ArrayList<Match> updateUnparsed(List<Match> blankMatches) {
+		System.out.println("в базе " + blankMatches.size() + " пустых матчей");
 		
 		var	output = new ArrayList<Match>();
 		
-		for (Long matchId : idsToFetch) {
-			Match match = matchDataFetcher.formById(matchId);
+		for (Match blankMatch : blankMatches) {
+			Match match = matchDataFetcher.formById(blankMatch.getId());
 			if(match != null) {
 				output.add(match);
-			} else {
-				omitted.add(matchId);
 			}
+		}
+		
+		System.out.println("удалось обновить " + output.size() + " матчей");
+		return output;
+		
+	}
+
+	public ArrayList<Match> createNewBlankMatches() {
+		System.out.println("запрашиваю болванки матчей");
+		var idsToFetch =  idProvider.suggestIds();
+		var	output = new ArrayList<Match>();
+		for (Long matchId : idsToFetch) {
+			Match match = Match.createEmpty(matchId);
+			output.add(match);
 		}
 		return output;
 		
