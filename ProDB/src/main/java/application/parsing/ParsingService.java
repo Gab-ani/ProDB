@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import application.data.Match;
+import application.data.OfficialMatch;
 
 @Service
 public class ParsingService {
@@ -17,12 +18,10 @@ public class ParsingService {
 	private MatchSniffer matchDataFetcher;			// takes match id, returns Match object
 	@Autowired
 	private MatchSelector idProvider;				// provides a list of numbers that definitely are ids of recent played matches
+
 	
-	private ArrayList<Long> omitted;				// contains match ids that hadn't been fetched on previous cycles for some reason (connection wise)
-	
-	@PostConstruct
-	public void init() {
-		omitted = new ArrayList<>();
+	public OfficialMatch fetchOfficialMatch(long id) {
+		return matchDataFetcher.proById(id);
 	}
 	
 	public ArrayList<Match> updateUnparsed(List<Match> blankMatches) {

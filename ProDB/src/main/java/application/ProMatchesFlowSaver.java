@@ -21,4 +21,8 @@ public class ProMatchesFlowSaver {
 		history.addAll(parser.updateUnparsed(history.getUnparsed()));
 	}
 	
+	public void saveOfficial(long id) {
+		history.add(parser.fetchOfficialMatch(id));
+	}
+	
 }

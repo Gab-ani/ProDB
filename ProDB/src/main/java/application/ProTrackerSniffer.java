@@ -40,12 +40,14 @@ public class ProTrackerSniffer {
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
 //			matchupService.updateAll();
-			matchWatcher.savePortion();  //<--- on the launch then sheduled for 0 minute hourly
+//			matchWatcher.savePortion();  //<--- on the launch then sheduled for 0 minute hourly
 
-			Hero[] radiant = predictor.createTeam("чен", "кунка", "макака", "мирана", "ДК");
-			Hero[] dire = predictor.createTeam("блад", "феникс", "лешрак", "ящер", "ио");
+			matchWatcher.saveOfficial(6728333090l);
 			
-			System.out.println(predictor.predict(radiant, dire));
+//			Hero[] radiant = predictor.createTeam("зомби", "мышь", "войд", "бист", "шейкер");
+//			Hero[] dire = predictor.createTeam("бейн", "нигма", "зевс", "тини", "ВК");
+//			
+//			System.out.println(predictor.predict(radiant, dire));
 
 //			System.setProperty("java.awt.headless", "true");
 			

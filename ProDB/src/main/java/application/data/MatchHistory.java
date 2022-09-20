@@ -10,6 +10,8 @@ public class MatchHistory {
 
 	@Autowired
 	private MatchRepository matchesDB;
+	@Autowired
+	private OfficialMatchRepository proMatchesDB;
 	
 	public void add(Match match) {
 		matchesDB.save(match);
@@ -25,5 +27,9 @@ public class MatchHistory {
 
 	public List<Match> getUnparsed() {
 		return matchesDB.findByParsed(false);
+	}
+	
+	public void add(OfficialMatch proMatch) {
+		proMatchesDB.save(proMatch);
 	}
 }

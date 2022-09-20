@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import application.data.Match;
+import application.data.OfficialMatch;
 
 // The class dedicated to parse match data from https://stratz.com and pack into data objects
 
@@ -29,12 +30,19 @@ public class StratzMatchSniffer implements MatchSniffer {
 	
 	private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0";
 	
+
+
+	public OfficialMatch proById(Long matchId) {
+		String json = fetchJson(matchId);
+		
+		return jsonToProMatch(json);
+	}
+	
 	public Match formById(Long matchId) {
 		
 		String json = fetchJson(matchId);
 		
 		return jsonToMatch(json);
-		
 	}
 	
 	private String fetchJson(long matchId) {
@@ -57,6 +65,43 @@ public class StratzMatchSniffer implements MatchSniffer {
 			return "";
 		}
 		
+	}
+	
+	private OfficialMatch jsonToProMatch(String json) {
+		
+		if(json == null || json.equals("")) {
+	//		System.out.println("empty json");			TODO create an exception
+			return null;
+		}
+		
+		OfficialMatch result = new OfficialMatch();
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode jNode;
+		
+		try {
+			
+			jNode = mapper.readTree(json);
+
+			for(int i = 0; i < 10; i++) {
+				parsePlayer(result, jNode.get("players").get(i));
+			}
+			
+			result.setDate(jNode.get("statsDateTime").asText());
+			result.setID(jNode.get("id").asLong());
+			if(jNode.get("didRadiantWin").asBoolean()) {
+				result.setWinner("radiant");
+			} else {
+				result.setWinner("dire");
+			}
+				
+			result.setCompetitors(jNode.get("radiantTeam").get("name").asText(), jNode.get("direTeam").get("name").asText());
+			result.setTourney(jNode.get("league").get("displayName").asText());
+		} catch (JsonProcessingException e1) {
+			e1.printStackTrace();
+		}
+		result.setParsed(true);
+		
+		return result;
 	}
 	
 	private Match jsonToMatch(String json) {

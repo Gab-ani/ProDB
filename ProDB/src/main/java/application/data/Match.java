@@ -5,10 +5,13 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="history")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Match {
 
 	@Id
